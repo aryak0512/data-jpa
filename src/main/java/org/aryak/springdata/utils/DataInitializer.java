@@ -18,6 +18,9 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+
+        studentRepository.deleteAll();
         System.out.println("DataInitializer was invoked.");
 
         // insert few students
@@ -27,6 +30,7 @@ public class DataInitializer implements CommandLineRunner {
 
         var students = List.of(s1, s2, s3);
 
+        studentRepository.saveAll(students);
 
 
     }
