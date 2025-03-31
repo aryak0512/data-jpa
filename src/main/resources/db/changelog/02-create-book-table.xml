@@ -1,0 +1,30 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="5" author="aryak" labels="Table creation">
+        <createTable tableName="BOOKS" remarks="Trying to create a table with liquibase">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="ISN" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AUTHOR" type="varchar(255)"/>
+            <column name="AUTHORID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="6" author="aryak" labels="Table creation">
+        <createTable tableName="BOOKS_SEQ" remarks="Trying to create a table with liquibase">
+            <column name="next_val" type="BIGINT"/>
+        </createTable>
+
+        <insert tableName="BOOKS_SEQ">
+            <column name="next_val" value="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

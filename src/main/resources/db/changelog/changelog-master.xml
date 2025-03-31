@@ -8,4 +8,6 @@
     <include file="db/changelog/baseline-changelog.xml"/>
     <include file="db/changelog/init-hibernate-sequence-changelog.xml"/>
     <include file="db/changelog/01-create-table-changelog.xml"/>
+    <include file="db/changelog/02-create-book-table.xml"/>
+    <include file="db/changelog/03-alter-book-table.xml"/>
 </databaseChangeLog>
