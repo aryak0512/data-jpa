@@ -6,5 +6,6 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
 
     <include file="db/changelog/baseline-changelog.xml"/>
-
+    <include file="db/changelog/init-hibernate-sequence-changelog.xml"/>
+    <include file="db/changelog/01-create-table-changelog.xml"/>
 </databaseChangeLog>
