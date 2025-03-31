@@ -28,6 +28,7 @@
     </scm>
     <properties>
         <java.version>21</java.version>
+        <liquibase.version>4.31.1</liquibase.version>
     </properties>
     <dependencies>
         <dependency>
@@ -112,6 +113,28 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+
+            <plugin>
+
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <configuration>
+                    <!-- DB credentials -->
+                    <url>jdbc:mysql://localhost:3306/bookdb?useSSL=false</url>
+                    <username>root</username>
+                    <password>example</password>
+                </configuration>
+                <dependencies>
+                    <!-- need to provide driver explicitly for plugins -->
+                    <dependency>
+                        <groupId>com.mysql</groupId>
+                        <artifactId>mysql-connector-j</artifactId>
+                        <scope>runtime</scope>
+                        <version>${mysql.version}</version> <!-- version is inherited from parent -->
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

@@ -1,33 +1,20 @@
 package org.aryak.springdata.repository;
 
-import org.aryak.springdata.domain.Student;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.util.List;
+import org.springframework.context.annotation.ComponentScan;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // tell spring to not replace with H2
 @DataJpaTest
+@ComponentScan(basePackages = {"org.aryak.springdata.utils"})
 class StudentRepositoryTest {
 
     @Autowired
     private StudentRepository studentRepository;
-
-    @BeforeEach
-    void setUp() {
-
-        studentRepository.deleteAll();
-        // insert few students
-        var s1 = Student.builder().address("Mumbai").name("Aryak").build();
-        var s2 = Student.builder().address("Pune").name("Aditya").build();
-        var s3 = Student.builder().address("Michigan").name("Satvik").build();
-
-        var students = List.of(s1, s2, s3);
-        studentRepository.saveAll(students);
-    }
 
     @Test
     void findAllStudents() {
