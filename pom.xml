@@ -125,6 +125,9 @@
                     <url>jdbc:mysql://localhost:3306/bookdb?useSSL=false</url>
                     <username>root</username>
                     <password>example</password>
+                    <changelogSchemaName>bookdb</changelogSchemaName>
+                    <outputChangeLogFile>changeLog.xml</outputChangeLogFile>
+                    <changeSetAuthor>Aryak</changeSetAuthor>
                 </configuration>
                 <dependencies>
                     <!-- need to provide driver explicitly for plugins -->
