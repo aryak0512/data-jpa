@@ -1,8 +1,10 @@
 package org.aryak.springdata.integration;
 
 import org.aryak.springdata.domain.AuthorComposite;
+import org.aryak.springdata.domain.AuthorEmbedded;
 import org.aryak.springdata.domain.NameId;
 import org.aryak.springdata.repository.AuthorCompositeRepository;
+import org.aryak.springdata.repository.AuthorEmbeddedRepository;
 import org.aryak.springdata.repository.StudentRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,6 +30,9 @@ class MyFirstMySqlIntegrationTest {
 
     @Autowired
     private AuthorCompositeRepository authorCompositeRepository;
+
+    @Autowired
+    AuthorEmbeddedRepository authorEmbeddedRepository;
 
     @Test
     void testContext() {
@@ -74,5 +79,44 @@ class MyFirstMySqlIntegrationTest {
         assertTrue(fetched.isEmpty());
     }
 
+    @Test
+    void testEmbeddedId(){
 
+        // given
+        NameId nameId = new NameId();
+        nameId.setFirstName("Aryak");
+        nameId.setLastName("Deshpande");
+
+        AuthorEmbedded ae = new AuthorEmbedded();
+        ae.setCountry("India");
+        ae.setNameId(nameId);
+
+        // when
+        authorEmbeddedRepository.save(ae);
+        var fetched = authorEmbeddedRepository.findById(nameId);
+
+        // then
+        assertThat(fetched.isPresent()).isTrue();
+    }
+
+    @Test
+    void testEmbeddedKeyNegativeScenario(){
+
+        // given
+        NameId nameId = new NameId();
+        nameId.setFirstName("Aryak");
+        nameId.setLastName("Deshpande");
+
+        AuthorEmbedded ae = new AuthorEmbedded();
+        ae.setCountry("India");
+        ae.setNameId(nameId);
+
+        // when
+        authorEmbeddedRepository.save(ae);
+        nameId.setFirstName("Aryan");
+        var fetched = authorEmbeddedRepository.findById(nameId);
+
+        // then
+        assertTrue(fetched.isEmpty());
+    }
 }

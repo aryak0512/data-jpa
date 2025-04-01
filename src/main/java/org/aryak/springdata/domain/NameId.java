@@ -1,8 +1,15 @@
 package org.aryak.springdata.domain;
 
+import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Setter
+@Getter
+@Embeddable
 public class NameId implements Serializable {
 
     private String firstName;
@@ -13,22 +20,6 @@ public class NameId implements Serializable {
 
     public NameId(String firstName, String lastName) {
         this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
