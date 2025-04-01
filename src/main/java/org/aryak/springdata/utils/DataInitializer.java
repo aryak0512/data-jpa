@@ -49,7 +49,6 @@ public class DataInitializer implements CommandLineRunner {
         var savedAuthor = authorUUIDRepository.save(a1);
         System.out.println(savedAuthor.getId());
 
-
         BookUUID b1 = new BookUUID();
         b1.setName("Domain Driven Design");
 
