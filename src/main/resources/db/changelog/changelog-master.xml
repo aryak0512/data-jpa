@@ -14,4 +14,5 @@
     <include file="db/changelog/05-add-book-uuid-table.xml"/>
     <include file="db/changelog/06-create-author-composite-table.xml"/>
     <include file="db/changelog/07-alter-author-composite-table.xml"/>
+    <include file="db/changelog/08-add-author-table-V2.xml"/>
 </databaseChangeLog>
