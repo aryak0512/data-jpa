@@ -4,19 +4,13 @@
                    xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="4" author="aryak" labels="Table creation">
-        <createTable tableName="department" remarks="Trying to create a table with liquibase">
-            <column name="id" type="int">
-                <constraints primaryKey="true"/>
+    <changeSet id="10" author="Aryak" labels="Author UUID table creation">
+        <createTable tableName="BOOK_UUID" remarks="Use HEX(ID) to view the id">
+            <column name="ID" type="BINARY(16)">
+                <constraints nullable="false" />
             </column>
-            <column name="dept" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="emp_id" type="int">
-                <constraints nullable="false"/>
-            </column>
+            <column name="NAME" type="varchar(255)"/>
         </createTable>
     </changeSet>
-
 
 </databaseChangeLog>
