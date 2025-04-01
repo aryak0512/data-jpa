@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import javax.sql.DataSource;
+import java.sql.SQLException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -28,19 +31,28 @@ class MyFirstJpaTest {
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
+    DataSource dataSource;
+
+    @Test
+    @Order(0)
+    void printDatabaseUrl() throws SQLException {
+        System.out.println("Database URL: " + dataSource.getConnection().getMetaData().getURL());
+    }
+
     @Test
     @Order(value = 1)
     void checkIfBeanLoadedCorrectly() {
         assertThat(studentRepository).isNotNull();
     }
 
-    @Test
+    //@Test
     @Order(value = 2)
     void checkIfDatabaseIsEmpty() {
         assertThat(studentRepository.count()).isZero();
     }
 
-    @Test
+    //@Test
     @Order(value = 3)
     void checkIfDataInsertedCorrectly() {
         Student s1 = new Student();

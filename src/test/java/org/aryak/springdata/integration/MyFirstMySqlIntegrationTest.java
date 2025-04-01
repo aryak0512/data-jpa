@@ -7,6 +7,7 @@ import org.aryak.springdata.repository.AuthorCompositeRepository;
 import org.aryak.springdata.repository.AuthorEmbeddedRepository;
 import org.aryak.springdata.repository.StudentRepository;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -14,7 +15,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Optional;
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,6 +35,16 @@ class MyFirstMySqlIntegrationTest {
 
     @Autowired
     AuthorEmbeddedRepository authorEmbeddedRepository;
+
+    @Autowired
+    DataSource dataSource;
+
+    @Test
+    @Order(0)
+    void printDatabaseUrl() throws SQLException {
+        System.out.println("Database URL: " + dataSource.getConnection().getMetaData().getURL());
+    }
+
 
     @Test
     void testContext() {
