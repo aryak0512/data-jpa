@@ -2,6 +2,8 @@ package org.aryak.springdata.dao;
 
 import org.aryak.springdata.domain.Author;
 
+import java.util.List;
+
 public interface AuthorDao {
 
     Author findById(Long authorId);
@@ -11,4 +13,6 @@ public interface AuthorDao {
     Author addNewAuthor(Author author);
 
     Author updateAuthor(Author author);
+
+    List<Author> getAuthorsByLastName(String lastName);
 }

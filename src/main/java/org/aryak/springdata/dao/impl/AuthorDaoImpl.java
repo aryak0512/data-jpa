@@ -2,12 +2,15 @@ package org.aryak.springdata.dao.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.aryak.springdata.dao.AuthorDao;
 import org.aryak.springdata.domain.Author;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class AuthorDaoImpl implements AuthorDao {
@@ -28,17 +31,21 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public Author findById(Long authorId) {
-        return getEntityManager().find(Author.class, authorId);
+        try ( var entityManager = getEntityManager() ) {
+            return entityManager.find(Author.class, authorId);
+        }
     }
 
     @Override
     public Author findByName(String firstName, String lastName) {
 
         String sql = "SELECT a from Author a where a.firstName = :first_name and a.lastName = :last_name";
-        TypedQuery<Author> authorTypedQuery = getEntityManager().createQuery(sql ,Author.class);
-        authorTypedQuery.setParameter("first_name", firstName);
-        authorTypedQuery.setParameter("last_name", lastName);
-        return authorTypedQuery.getSingleResult();
+        try ( var entityManager = getEntityManager() ) {
+            TypedQuery<Author> authorTypedQuery = entityManager.createQuery(sql, Author.class);
+            authorTypedQuery.setParameter("first_name", firstName);
+            authorTypedQuery.setParameter("last_name", lastName);
+            return authorTypedQuery.getSingleResult();
+        }
     }
 
     @Override
@@ -52,7 +59,7 @@ public class AuthorDaoImpl implements AuthorDao {
         em.flush();                  // force hibernate to persist
 
         em.getTransaction().commit(); // ------- end txn
-
+        em.close();
         log.info("Saved object to DB : {}", author);
         return author;
     }
@@ -66,6 +73,17 @@ public class AuthorDaoImpl implements AuthorDao {
         em.flush();
 
         em.getTransaction().commit();   // ------- end txn
-        return null;
+        em.close();
+        return author;
+    }
+
+    @Override
+    public List<Author> getAuthorsByLastName(String lastName) {
+
+        try ( EntityManager em = getEntityManager(); ) {
+            Query query = em.createQuery("SELECT a from Author a where a.lastName = :last_name");
+            query.setParameter("last_name", lastName);
+            return query.getResultList();
+        }
     }
 }
