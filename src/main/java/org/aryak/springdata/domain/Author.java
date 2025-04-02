@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @Entity
 @ToString
+@NamedQuery(name = "find_all", query = "from Author")
 public class Author {
 
     @Id

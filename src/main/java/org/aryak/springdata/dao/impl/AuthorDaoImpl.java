@@ -86,4 +86,28 @@ public class AuthorDaoImpl implements AuthorDao {
             return query.getResultList();
         }
     }
+
+    /**
+     * Typed query is always better than Query as explicit casting is not needed
+     * @return List<Author>
+     */
+    @Override
+    public List<Author> findAll() {
+
+        try( var entityManager = getEntityManager() ){
+            TypedQuery<Author> typedQuery = entityManager.createNamedQuery("find_all", Author.class);
+            return typedQuery.getResultList();
+        }
+    }
+
+    @Override
+    public void deleteAll() {
+        try( var entityManager = getEntityManager() ){
+            entityManager.getTransaction().begin(); // ------- start txn
+            Query deleteQuery = entityManager.createNativeQuery("DELETE FROM AUTHOR");
+            deleteQuery.executeUpdate();
+
+            entityManager.getTransaction().commit(); // ------- start txn
+        }
+    }
 }

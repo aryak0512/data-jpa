@@ -2,6 +2,7 @@ package org.aryak.springdata.dao.impl;
 
 import org.aryak.springdata.dao.AuthorDao;
 import org.aryak.springdata.domain.Author;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import javax.sql.DataSource;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -23,6 +25,11 @@ class AuthorDaoImplTest {
 
     @Autowired
     DataSource dataSource;
+
+    @BeforeEach
+    void cleanDatabase() {
+        authorDao.deleteAll();  // Ensure a clean database
+    }
 
     @Test
     @Order(0)
@@ -99,5 +106,54 @@ class AuthorDaoImplTest {
         // then
         assertThat(author.getLastName()).isEqualTo("Desh");
 
+    }
+
+    @Test
+    void getAuthorsByLastName() {
+
+        // given
+        var authors1 = getAuthors();
+        for ( Author a : authors1 ){
+            a.setId(null);
+            authorDao.addNewAuthor(a);
+        }
+
+        // when
+        List<Author> authors = authorDao.getAuthorsByLastName("Konstas");
+
+        // then
+        assertThat(authors.size()).isEqualTo(2);
+
+    }
+
+    @Test
+    void findAll() {
+
+        // given
+        var authors1 = getAuthors();
+        for ( Author a : authors1 ){
+            authorDao.addNewAuthor(a);
+        }
+
+        // when
+        var all = authorDao.findAll();
+        System.out.println("All : " +all);
+
+        // then
+        assertThat(all.size()).isEqualTo(2);
+    }
+
+
+    List<Author> getAuthors(){
+        Author a = new Author();
+        a.setFirstName("Aryak");
+        a.setLastName("Konstas");
+        a.setId(null);
+
+        Author a1 = new Author();
+        a1.setFirstName("sam");
+        a1.setLastName("Konstas");
+        a1.setId(null);
+        return List.of(a, a1);
     }
 }

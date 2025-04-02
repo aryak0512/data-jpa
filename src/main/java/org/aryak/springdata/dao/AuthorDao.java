@@ -15,4 +15,8 @@ public interface AuthorDao {
     Author updateAuthor(Author author);
 
     List<Author> getAuthorsByLastName(String lastName);
+
+    List<Author> findAll();
+
+    void deleteAll();
 }
